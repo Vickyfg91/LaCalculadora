@@ -31,7 +31,7 @@ public class PanelPrincipal extends JPanel {
         // Creamos el panel de botones
         botonera = new PanelBotones();
         // Creamos el área de texto
-        areaTexto = new JTextArea(10, 50);
+        areaTexto = new JTextArea(7, 18);
         areaTexto.setEditable(false);
         areaTexto.setBackground(Color.white);
         //Establecemos layout del panel principal
