@@ -16,12 +16,14 @@ import javax.swing.JTextArea;
  *
  * @author vickyfg
  */
-public class PanelPrincipal extends JPanel implements ActionListener{
+public class PanelPrincipal extends JPanel implements ActionListener {
 
     // Atributos de la clase (privados)
     private PanelBotones botonera;
     private JTextArea areaTexto;
     private int tipoOperacion;
+    private String operacion;
+
 
     // Constructor
     public PanelPrincipal() {
@@ -48,9 +50,9 @@ public class PanelPrincipal extends JPanel implements ActionListener{
         }
     }
 
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-	// Se obtiene el objeto que desencadena el evento
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        // Se obtiene el objeto que desencadena el evento
         Object o = ae.getSource();
             // Si es un botón
            
@@ -58,9 +60,26 @@ public class PanelPrincipal extends JPanel implements ActionListener{
                 System.out.println(((JButton) o).getText());
                 areaTexto.setText(((JButton) o).getText());
             }
-            
-         
-
+    }
+    
+    // Método para realizar la operacion aritmetica
+    private double operacionAritmetica(double num1, double num2, String operacion) {
+        switch (operacion) {
+            case "+":
+                return num1 + num2;
+            case "-":
+                return num1 - num2;
+            case "*":
+                return num1 * num2;
+            case "/":
+                if (num2 != 0) {
+                    return num1 / num2;
+                } else {
+                    throw new ArithmeticException("División por cero");
+                }
+            default:
+                throw new IllegalArgumentException("Operación no soportada: " + operacion);
         }
+    }
     
 }
