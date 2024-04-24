@@ -80,21 +80,21 @@ public class PanelPrincipal extends JPanel implements ActionListener {
                     areaTextoA.setText(areaTextoA.getText() + "+");
                     break;
                 case "-":
-                     tipoOperacion = 2;
+                    tipoOperacion = 2;
                     areaTextoA.setText(areaTextoA.getText() + "-");
                     break;
                 case "*":
-                     tipoOperacion = 3;
+                    tipoOperacion = 3;
                     areaTextoA.setText(areaTextoA.getText() + "*");
                     break;
                 case "/":
-                   tipoOperacion = 4;
+                    tipoOperacion = 4;
                     areaTextoA.setText(areaTextoA.getText() + "/");
                     break;
                 case "=":
                     String[] conjuntoNum = areaTextoA.getText().split("\\+|\\-|\\*|\\/");
 //                    try {
-//                        resultado(tipoOperacion, Double.parseDouble(conjuntoNum[0]), Double.parseDouble(conjuntoNum[1]));
+//                        operacionAritmetica(tipoOperacion, Double.parseDouble(conjuntoNum[0]), Double.parseDouble(conjuntoNum[1]));
 //                    
 //                    } catch {
 //                        throw new ArithmeticException("División por cero");
@@ -104,7 +104,39 @@ public class PanelPrincipal extends JPanel implements ActionListener {
             }
         }
     }
-    // Método para realizar la operacion aritmetica
 
-    
+    // Método para realizar la operación aritmética
+    private double operacionAritmetica(double num1, double num2, int tipoOperacion) {
+        double resultado = 0;
+        switch (tipoOperacion) {
+            case 1:
+                resultado = num1 + num2;
+                areaTextoA.setText(Double.toString(resultado));
+                areaTextoB.setText(num1 + " + " + num2 + " = ");
+                break;
+            case 2:
+                resultado = num1 - num2;
+                areaTextoA.setText(Double.toString(resultado));
+                areaTextoB.setText(num1 + " - " + num2 + " = ");
+                break;
+            case 3:
+                resultado = num1 * num2;
+                areaTextoA.setText(Double.toString(resultado));
+                areaTextoB.setText(num1 + " x " + num2 + " = ");
+                break;
+            case 4:
+                if (num2 != 0) {
+                    resultado = num1 / num2;
+                    areaTextoA.setText(Double.toString(resultado));
+                    areaTextoB.setText(num1 + " / " + num2 + " = ");
+                } else {
+                    throw new ArithmeticException("División por cero");
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Operación no soportada: " + tipoOperacion);
+        }
+        return resultado;
     }
+
+}
