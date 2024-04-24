@@ -36,26 +36,37 @@ public class PanelPrincipal extends JPanel implements ActionListener {
         // Creamos el panel de botones
         botonera = new PanelBotones();
         // Creamos el área de texto de arriba donde se visualizan las operacions
-        areaTextoA = new JTextArea(7, 18);
+        areaTextoA = new JTextArea(10, 20);
         areaTextoA.setEditable(false);
         areaTextoA.setBackground(Color.white);
 
         // Creamos el área de texto de arriba donde se visualizan los resultados das operaciones
-        areaTextoB = new JTextArea(3, 18);
+        areaTextoB = new JTextArea(3, 20);
         areaTextoB.setEditable(false);
         areaTextoB.setBackground(Color.white);
 
-        //Establecemos layout del panel principal
+        // Establecemos layout del panel principal
         this.setLayout(new BorderLayout());
 
         // Colocamos la botonera y el área texto
-        this.add(areaTextoA, BorderLayout.NORTH);
+        this.add(areaTextoA, BorderLayout.BEFORE_LINE_BEGINS);
         this.add(areaTextoB, BorderLayout.NORTH);
         this.add(botonera, BorderLayout.SOUTH);
 
         for (JButton boton : this.botonera.getgrupoBotones()) {
             boton.addActionListener(this);
         }
+//          javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+//        this.setLayout(layout);
+//        layout.setHorizontalGroup(
+//            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//            .addGap(0, 400, Short.MAX_VALUE)
+//        );
+//        layout.setVerticalGroup(
+//            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//            .addGap(0, 300, Short.MAX_VALUE)
+//        );
+    // </editor-fold>//GEN-END:initComponents
     }
 
     @Override
@@ -63,12 +74,15 @@ public class PanelPrincipal extends JPanel implements ActionListener {
         // Se obtiene el objeto que desencadena el evento
         Object o = ae.getSource();
         // Si es un botón
-        if (o instanceof JButton) {
-            System.out.println(((JButton) o).getText());
-            areaTextoA.setText(((JButton) o).getText());
-        } else if (o.equals(this.botonera.grupoBotones[15])) {
+//        if (o instanceof JButton) {
+//            JButton boton = (JButton) o;
+//            String textoBoton = boton.getText();
+//            areaTextoA.append(textoBoton);
+        //} else 
+        if (o.equals(this.botonera.grupoBotones[15])) {
             areaTextoA.setText("");
             areaTextoB.setText("");
+            
         } else if (o instanceof JButton botones) {
             String operandos = botones.getText();
 
@@ -92,20 +106,31 @@ public class PanelPrincipal extends JPanel implements ActionListener {
                     break;
                 case "=":
                     String[] conjuntoNum = areaTextoA.getText().split("\\+|\\-|\\*|\\/");
-                    if (conjuntoNum.length == 2) {
+//                    if (conjuntoNum.length == 2) {
                         try {
-                            operacionAritmetica(Double.parseDouble(conjuntoNum[0]),Double.parseDouble(conjuntoNum[0]), tipoOperacion);
+                            operacionAritmetica(tipoOperacion, Double.parseDouble(conjuntoNum[0]), Double.parseDouble(conjuntoNum[1]));
                         } catch (NumberFormatException e) {
                             throw new NumberFormatException("Solo se pueden realizar operaciones con números");
+                        } catch (IndexOutOfBoundsException ea) {
+                        
                         }
-                    } else {
-                        throw new IllegalArgumentException("Operación no válida");
-                    }
+//                    } else {
+//                        throw new IllegalArgumentException("Operación no válida");
+//                    }
+                         break;
+                case "C":
+                        areaTextoA.setText("");
+                        areaTextoB.setText("");
+                        tipoOperacion = -1;
+                    break;                  
+                default:
+                    areaTextoA.setText(areaTextoA.getText()+operandos);
+                    break;
             }
         }
     }
-        // Método para realizar la operación aritmética
-    private double operacionAritmetica(double num1, double num2, int tipoOperacion) {
+    // Método para realizar la operación aritmética
+    private double operacionAritmetica(int tipoOperacion, double num1, double num2) {
         double resultado = 0;
         switch (tipoOperacion) {
             case 1:
