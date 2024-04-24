@@ -20,10 +20,10 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 
     // Atributos de la clase (privados)
     private PanelBotones botonera;
-    private JTextArea areaTexto;
+    private JTextArea areaTextoA;
+    private JTextArea areaTextoB;
     private int tipoOperacion;
     private String operacion;
-
 
     // Constructor
     public PanelPrincipal() {
@@ -35,14 +35,22 @@ public class PanelPrincipal extends JPanel implements ActionListener {
     private void initComponents() {
         // Creamos el panel de botones
         botonera = new PanelBotones();
-        // Creamos el área de texto
-        areaTexto = new JTextArea(7, 18);
-        areaTexto.setEditable(false);
-        areaTexto.setBackground(Color.white);
+        // Creamos el área de texto de arriba donde se visualizan las operacions
+        areaTextoA = new JTextArea(7, 18);
+        areaTextoA.setEditable(false);
+        areaTextoA.setBackground(Color.white);
+
+        // Creamos el área de texto de arriba donde se visualizan los resultados das operaciones
+        areaTextoB = new JTextArea(3, 18);
+        areaTextoB.setEditable(false);
+        areaTextoB.setBackground(Color.white);
+
         //Establecemos layout del panel principal
         this.setLayout(new BorderLayout());
+
         // Colocamos la botonera y el área texto
-        this.add(areaTexto, BorderLayout.NORTH);
+        this.add(areaTextoA, BorderLayout.NORTH);
+        this.add(areaTextoB, BorderLayout.NORTH);
         this.add(botonera, BorderLayout.SOUTH);
 
         for (JButton boton : this.botonera.getgrupoBotones()) {
@@ -54,32 +62,49 @@ public class PanelPrincipal extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         // Se obtiene el objeto que desencadena el evento
         Object o = ae.getSource();
-            // Si es un botón
-           
-            if (o instanceof JButton) {
-                System.out.println(((JButton) o).getText());
-                areaTexto.setText(((JButton) o).getText());
+        // Si es un botón
+
+        if (o instanceof JButton) {
+            System.out.println(((JButton) o).getText());
+            areaTextoA.setText(((JButton) o).getText());
+        } else if (o.equals(this.botonera.grupoBotones[15])) {
+            areaTextoA.setText("");
+            areaTextoB.setText("");
+        } else if (o instanceof JButton botones) {
+            String operandos = botones.getText();
+
+            //Switch para los case de los operandos
+            switch (operandos) {
+                case "+":
+                    tipoOperacion = 1;
+                    areaTextoA.setText(areaTextoA.getText() + "+");
+                    break;
+                case "-":
+                     tipoOperacion = 2;
+                    areaTextoA.setText(areaTextoA.getText() + "-");
+                    break;
+                case "*":
+                     tipoOperacion = 3;
+                    areaTextoA.setText(areaTextoA.getText() + "*");
+                    break;
+                case "/":
+                   tipoOperacion = 4;
+                    areaTextoA.setText(areaTextoA.getText() + "/");
+                    break;
+                case "=":
+                    String[] conjuntoNum = areaTextoA.getText().split("\\+|\\-|\\*|\\/");
+//                    try {
+//                        resultado(tipoOperacion, Double.parseDouble(conjuntoNum[0]), Double.parseDouble(conjuntoNum[1]));
+//                    
+//                    } catch {
+//                        throw new ArithmeticException("División por cero");
+//                    }
+//                default:
+//                    throw new IllegalArgumentException("Operación no soportada: " + operacion);
             }
-    }
-    
-    // Método para realizar la operacion aritmetica
-    private double operacionAritmetica(double num1, double num2, String operacion) {
-        switch (operacion) {
-            case "+":
-                return num1 + num2;
-            case "-":
-                return num1 - num2;
-            case "*":
-                return num1 * num2;
-            case "/":
-                if (num2 != 0) {
-                    return num1 / num2;
-                } else {
-                    throw new ArithmeticException("División por cero");
-                }
-            default:
-                throw new IllegalArgumentException("Operación no soportada: " + operacion);
         }
     }
+    // Método para realizar la operacion aritmetica
+
     
-}
+    }
