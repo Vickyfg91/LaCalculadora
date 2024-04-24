@@ -23,7 +23,7 @@ public class PanelPrincipal extends JPanel implements ActionListener {
     private JTextArea areaTextoA;
     private JTextArea areaTextoB;
     private int tipoOperacion;
-    private String operacion;
+    //private String operacion;
 
     // Constructor
     public PanelPrincipal() {
@@ -63,7 +63,6 @@ public class PanelPrincipal extends JPanel implements ActionListener {
         // Se obtiene el objeto que desencadena el evento
         Object o = ae.getSource();
         // Si es un botón
-
         if (o instanceof JButton) {
             System.out.println(((JButton) o).getText());
             areaTextoA.setText(((JButton) o).getText());
@@ -93,19 +92,19 @@ public class PanelPrincipal extends JPanel implements ActionListener {
                     break;
                 case "=":
                     String[] conjuntoNum = areaTextoA.getText().split("\\+|\\-|\\*|\\/");
-//                    try {
-//                        operacionAritmetica(tipoOperacion, Double.parseDouble(conjuntoNum[0]), Double.parseDouble(conjuntoNum[1]));
-//                    
-//                    } catch {
-//                        throw new ArithmeticException("División por cero");
-//                    }
-//                default:
-//                    throw new IllegalArgumentException("Operación no soportada: " + operacion);
+                    if (conjuntoNum.length == 2) {
+                        try {
+                            operacionAritmetica(Double.parseDouble(conjuntoNum[0]),Double.parseDouble(conjuntoNum[0]), tipoOperacion);
+                        } catch (NumberFormatException e) {
+                            throw new NumberFormatException("Solo se pueden realizar operaciones con números");
+                        }
+                    } else {
+                        throw new IllegalArgumentException("Operación no válida");
+                    }
             }
         }
     }
-
-    // Método para realizar la operación aritmética
+        // Método para realizar la operación aritmética
     private double operacionAritmetica(double num1, double num2, int tipoOperacion) {
         double resultado = 0;
         switch (tipoOperacion) {
