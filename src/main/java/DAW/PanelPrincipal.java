@@ -154,7 +154,8 @@ public class PanelPrincipal extends JPanel implements ActionListener {
                     areaTextoA.setText(Double.toString(resultado));
                     areaTextoB.setText(num1 + " / " + num2 + " = ");
                 } else {
-                    throw new ArithmeticException("División por cero");
+                    
+                    areaTextoB.setText(num1 + " / " + num2 + " = \"División por cero\"");
                 }
                 break;
             default:
